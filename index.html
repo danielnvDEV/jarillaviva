@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarilla Viva - Turismo Regenerativo en Extremadura</title>
+    <style>
+        :root {
+            --color-primary: #2d8e40;
+            --color-primary-hover: #247035;
+            --color-secondary: #8b6f47;
+            --color-accent: #e67e22;
+            --color-background: #fcfcf9;
+            --color-surface: #ffffff;
+            --color-text: #2c3e50;
+            --color-text-light: #7f8c8d;
+            --color-border: rgba(139, 111, 71, 0.2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1a5f2a 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="70" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--color-surface);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            color: var(--color-text);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav button:hover,
+        nav button.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(45, 142, 64, 0.08) 0%, rgba(230, 126, 34, 0.08) 100%);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--color-text-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-icon {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1a5f2a 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 3rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: var(--color-text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-accent);
+            margin: 0.5rem 0;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: rgba(45, 142, 64, 0.1);
+            color: var(--color-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--color-surface);
+            border-left: 4px solid var(--color-primary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-box h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box ul {
+            padding-left: 1.5rem;
+        }
+
+        .info-box li {
+            margin: 0.5rem 0;
+            color: var(--color-text);
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .value-item {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-item h4 {
+            color: var(--color-primary);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            border: 4px solid var(--color-background);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 16px;
+            width: 2px;
+            height: calc(100% + 2rem);
+            background: var(--color-border);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-content {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-content h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--color-accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            nav button {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌿 Jarilla Viva</h1>
+        <p>Cooperativa de Turismo Regenerativo y Agroecológico</p>
+        <p style="font-size: 0.95rem; margin-top: 0.5rem; opacity: 0.9;">
+            "Dejamos una huella verde, no una huella de carbono"
+        </p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><button onclick="showSection('inicio')" class="active" id="nav-inicio">Inicio</button></li>
+            <li><button onclick="showSection('iniciativa')" id="nav-iniciativa">La Iniciativa</button></li>
+            <li><button onclick="showSection('experiencias')" id="nav-experiencias">Experiencias</button></li>
+            <li><button onclick="showSection('rutas')" id="nav-rutas">Rutas</button></li>
+            <li><button onclick="showSection('comercios')" id="nav-comercios">Comercios Locales</button></li>
+            <li><button onclick="showSection('contacto')" id="nav-contacto">Contacto</button></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Sección Inicio -->
+        <div id="inicio" class="section active">
+            <div class="hero">
+                <h2>Transformando la Recuperación en Oportunidad</h2>
+                <p>Una respuesta comunitaria tras los incendios de 2025 para regenerar la naturaleza y reavivar la vida del pueblo de Jarilla, Extremadura.</p>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <img src="https://images.unsplash.com/photo-1590698933947-a202b069a861?w=1200&h=400&fit=crop" alt="Vista panorámica de Jarilla y sus alrededores" style="width: 100%; height: 400px; object-fit: cover; border-radius: 12px; box-shadow: var(--shadow-md);">
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">17.367</div>
+                    <div class="stat-label">Hectáreas afectadas por incendio</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">47</div>
+                    <div class="stat-label">Días que duró el incendio</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Municipios afectados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Compromiso con la regeneración</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Nuestra Misión</h3>
+                <p>Regenerar el territorio y ofrecer experiencias sostenibles que conecten a visitantes con la naturaleza, la cultura local y la comunidad, promoviendo la restauración ecológica y la cohesión social.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>🌟 Nuestra Visión</h3>
+                <p>Convertir a Jarilla en un referente de turismo regenerativo en Extremadura, donde naturaleza, cultura y comunidad se unen a través de tradición, gastronomía y respeto ambiental.</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">🤝</div>
+                    <h4>Comunidad</h4>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🌱</div>
+                    <h4>Sostenibilidad</h4>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">👥</div>
+                    <h4>Participación</h4>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🔗</div>
+                    <h4>Cooperación</h4>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🏡</div>
+                    <h4>Identidad Local</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Iniciativa -->
+        <div id="iniciativa" class="section">
+            <h2 style="color: var(--color-primary); margin-bottom: 1.5rem;">La Cooperativa Jarilla Viva</h2>
+            
+            <div class="info-box">
+                <h3>¿Qué es Jarilla Viva?</h3>
+                <p>Una cooperativa de turismo regenerativo y agroecológico gestionada por la comunidad local, nacida tras los incendios de 2025 para regenerar la naturaleza y reavivar la vida del pueblo.</p>
+            </div>
+
+            <h3 style="color: var(--color-primary); margin: 2rem 0 1rem;">Pilares de Innovación Regenerativa</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🌳</div>
+                    <div class="card-content">
+                        <h3>Ecológica</h3>
+                        <ul style="padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Reforestación con especies autóctonas</li>
+                            <li>Plantación de encinas</li>
+                            <li>Recuperación de senderos</li>
+                            <li>Miradores en bosques regenerados</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏘️</div>
+                    <div class="card-content">
+                        <h3>Social</h3>
+                        <ul style="padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Creación de empleo local</li>
+                            <li>Participación comunitaria</li>
+                            <li>Formación ambiental para jóvenes</li>
+                            <li>Cooperativa gestionada por vecinos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <div class="card-content">
+                        <h3>Cultural</h3>
+                        <ul style="padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Recuperación de oficios tradicionales</li>
+                            <li>Gastronomía local</li>
+                            <li>Talleres de miel artesanal</li>
+                            <li>Rutas interpretativas de patrimonio</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <div class="card-content">
+                        <h3>Digital</h3>
+                        <ul style="padding-left: 1.5rem; color: var(--color-text-light);">
+                            <li>Plataforma web jarillaviva.es</li>
+                            <li>Sistema de reservas online</li>
+                            <li>Historias del pueblo digitalizadas</li>
+                            <li>Herramientas de gestión sostenible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <h3>💰 Modelo Económico Cooperativo</h3>
+                <p><strong>Inversión inicial:</strong> 40.000€ (70% fondos europeos PSTD/LIFE + 30% socios)</p>
+                <p style="margin-top: 0.5rem;"><strong>Distribución de ingresos:</strong></p>
+                <ul>
+                    <li>45% - Experiencias turísticas</li>
+                    <li>25% - Venta de productos locales</li>
+                    <li>15% - Programas educativos</li>
+                    <li>15% - Subvenciones y crowdfunding</li>
+                </ul>
+                <p style="margin-top: 1rem; font-weight: 500;">Todos los beneficios se reinvierten en el territorio y la comunidad</p>
+            </div>
+        </div>
+
+        <!-- Sección Experiencias -->
+        <div id="experiencias" class="section">
+            <h2 style="color: var(--color-primary); margin-bottom: 1.5rem;">Experiencias Regenerativas</h2>
+            <p style="color: var(--color-text-light); margin-bottom: 2rem;">Actividades que restauran la naturaleza, fortalecen la comunidad y transforman tu visita</p>
+
+            <div style="margin: 2rem 0;">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&h=350&fit=crop" alt="Voluntarios plantando árboles en Jarilla" style="width: 100%; height: 350px; object-fit: cover; border-radius: 12px; box-shadow: var(--shadow-md);">
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🌲</div>
+                    <div class="card-content">
+                        <h3>Reforestación Participativa</h3>
+                        <p>Únete a nuestros voluntariados ambientales con talleres prácticos de reforestación.</p>
+                        <div class="card-badge">Programa "Bosque Vivo"</div>
+                        <div class="card-badge">Apadrina tu Encina</div>
+                        <div class="card-price">30-40€</div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-light);">Incluye: Jornada completa, materiales, almuerzo local</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🍯</div>
+                    <div class="card-content">
+                        <h3>Sabores de Jarilla</h3>
+                        <p>Degustaciones de productos locales y visitas a fincas agroecológicas.</p>
+                        <div class="card-badge">Cerezas</div>
+                        <div class="card-badge">Miel</div>
+                        <div class="card-badge">Aceite</div>
+                        <div class="card-price">35€</div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-light);">Incluye: Visita guiada, degustación, cesta de productos</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🥾</div>
+                    <div class="card-content">
+                        <h3>Senderos Regenerativos</h3>
+                        <p>Rutas guiadas por la naturaleza con miradores que muestran la evolución del territorio tras el incendio.</p>
+                        <div class="card-badge">Apto familias</div>
+                        <div class="card-price">25€</div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-light);">Incluye: Guía especializado, 3-4 horas, snack</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <div class="card-content">
+                        <h3>Formación Ambiental (PAES)</h3>
+                        <p>Actividades educativas para escuelas, universidades y centros de formación.</p>
+                        <div class="card-badge">Educación sostenible</div>
+                        <div class="card-price">Consultar</div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-light);">Programas adaptados a cada grupo</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-content">
+                        <h3>Talleres de Oficios Tradicionales</h3>
+                        <p>Aprende miel artesanal, cestería, gastronomía local y otros oficios recuperados.</p>
+                        <div class="card-badge">Cultura viva</div>
+                        <div class="card-price">30€</div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-light);">Incluye: Taller práctico, materiales, certificado</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏛️</div>
+                    <div class="card-content">
+                        <h3>Rutas Interpretativas de Patrimonio</h3>
+                        <p>Descubre la historia, arquitectura y tradiciones de Jarilla con guías locales.</p>
+                        <div class="card-badge">Patrimonio</div>
+                        <div class="card-price">20€</div>
+                        <p style="font-size: 0.85rem; color: var(--color-text-light);">Incluye: Guía local, 2 horas, material informativo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <h3>🎯 Público Objetivo</h3>
+                <ul>
+                    <li><strong>Eco-viajeros (25-45 años):</strong> Buscan experiencias auténticas de turismo regenerativo</li>
+                    <li><strong>Familias:</strong> Actividades educativas en la naturaleza aptas para todas las edades</li>
+                    <li><strong>Escuelas primarias (8-12 años):</strong> Excursiones "Bosque Vivo" y talleres educativos</li>
+                    <li><strong>Estudiantes universitarios:</strong> Prácticas en biodiversidad y gestión ambiental</li>
+                    <li><strong>Grupos de voluntariado:</strong> Jornadas de reforestación y restauración</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Rutas -->
+        <div id="rutas" class="section">
+            <h2 style="color: var(--color-primary); margin-bottom: 1.5rem;">Rutas Naturales y Culturales</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>🌳 Ruta del Bosque Regenerado</h3>
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=300&fit=crop" alt="Bosque en proceso de regeneración" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                        <p><strong>Dificultad:</strong> Media | <strong>Duración:</strong> 3-4 horas | <strong>Distancia:</strong> 8 km</p>
+                        <p>Recorre los senderos restaurados y observa la evolución de la naturaleza tras el incendio. Incluye miradores panorámicos con vistas al valle.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Puntos de interés:</strong> Mirador del Valle, Zona de plantación de encinas, Senderos recuperados</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>🍒 Ruta Agroecológica</h3>
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&h=300&fit=crop" alt="Campos agrícolas y fincas ecológicas" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                        <p><strong>Dificultad:</strong> Fácil | <strong>Duración:</strong> 2-3 horas | <strong>Distancia:</strong> 5 km</p>
+                        <p>Visita las fincas agroecológicas locales productoras de cerezas, miel y aceite. Incluye degustación de productos.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Puntos de interés:</strong> Huertos ecológicos, Colmenares tradicionales, Olivares centenarios</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>🏘️ Ruta del Patrimonio Local</h3>
+                        <img src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=300&fit=crop" alt="Pueblo tradicional de Extremadura" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                        <p><strong>Dificultad:</strong> Fácil | <strong>Duración:</strong> 2 horas | <strong>Distancia:</strong> 3 km</p>
+                        <p>Descubre la arquitectura tradicional, oficios artesanales y la historia de Jarilla con guías locales.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Puntos de interés:</strong> Casco histórico, Talleres artesanales, Mirador del pueblo</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>🦋 Ruta de la Biodiversidad</h3>
+                        <p><strong>Dificultad:</strong> Media-Alta | <strong>Duración:</strong> 4-5 horas | <strong>Distancia:</strong> 12 km</p>
+                        <p>Para amantes de la naturaleza: observación de flora y fauna autóctonas en proceso de recuperación.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Puntos de interés:</strong> Zonas de recuperación de hábitat, Observatorio de aves, Ecosistemas regenerados</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>👨‍👩‍👧‍👦 Ruta Familiar "Bosque Vivo"</h3>
+                        <p><strong>Dificultad:</strong> Muy fácil | <strong>Duración:</strong> 1.5-2 horas | <strong>Distancia:</strong> 3 km</p>
+                        <p>Ruta adaptada para familias con niños. Incluye juegos educativos sobre biodiversidad y reforestación.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Puntos de interés:</strong> Zona de plantación participativa, Talleres educativos, Área de picnic</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>ℹ️ Información Práctica</h3>
+                <ul>
+                    <li>Todas las rutas incluyen guía especializado</li>
+                    <li>Equipamiento recomendado: calzado de senderismo, agua, protección solar</li>
+                    <li>Las rutas se adaptan a la temporada y condiciones meteorológicas</li>
+                    <li>Grupos reducidos para minimizar impacto ambiental (máx. 15 personas)</li>
+                    <li>Posibilidad de rutas personalizadas para grupos</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Comercios -->
+        <div id="comercios" class="section">
+            <h2 style="color: var(--color-primary); margin-bottom: 1.5rem;">Comercios y Productores Locales</h2>
+            <p style="color: var(--color-text-light); margin-bottom: 2rem;">Apoya la economía local adquiriendo productos agroecológicos y artesanales de Jarilla</p>
+
+            <div style="margin: 2rem 0;">
+                <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=1200&h=350&fit=crop" alt="Productos locales artesanales de Jarilla" style="width: 100%; height: 350px; object-fit: cover; border-radius: 12px; box-shadow: var(--shadow-md);">
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🍯</div>
+                    <div class="card-content">
+                        <h3>Miel Artesanal de Jarilla</h3>
+                        <p>Miel ecológica producida por apicultores locales en colmenares tradicionales.</p>
+                        <div class="card-badge">100% Natural</div>
+                        <div class="card-badge">Producción local</div>
+                        <p style="margin-top: 1rem; font-weight: 500;">Variedades: Mil flores, Romero, Encina</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🫒</div>
+                    <div class="card-content">
+                        <h3>Aceite de Oliva Virgen Extra</h3>
+                        <p>Aceite de producción ecológica de olivares centenarios de la zona.</p>
+                        <div class="card-badge">AOVE</div>
+                        <div class="card-badge">Ecológico</div>
+                        <p style="margin-top: 1rem; font-weight: 500;">Prensado en frío, primera extracción</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🍒</div>
+                    <div class="card-content">
+                        <h3>Cerezas y Derivados</h3>
+                        <p>Cerezas frescas de temporada y productos elaborados (mermeladas, licores).</p>
+                        <div class="card-badge">Temporada</div>
+                        <div class="card-badge">Km 0</div>
+                        <p style="margin-top: 1rem; font-weight: 500;">Disponible: Mayo-Julio</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🧺</div>
+                    <div class="card-content">
+                        <h3>Artesanía Local</h3>
+                        <p>Productos artesanales: cestería tradicional, cerámica, textiles y objetos decorativos.</p>
+                        <div class="card-badge">Hecho a mano</div>
+                        <div class="card-badge">Único</div>
+                        <p style="margin-top: 1rem; font-weight: 500;">Talleres disponibles</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌾</div>
+                    <div class="card-content">
+                        <h3>Productos de Huerta Ecológica</h3>
+                        <p>Verduras y hortalizas de temporada cultivadas sin pesticidas ni químicos.</p>
+                        <div class="card-badge">Ecológico</div>
+                        <div class="card-badge">Fresco</div>
+                        <p style="margin-top: 1rem; font-weight: 500;">Cestas semanales disponibles</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🍷</div>
+                    <div class="card-content">
+                        <h3>Licores y Conservas Tradicionales</h3>
+                        <p>Licores artesanales, mermeladas y conservas elaboradas con recetas tradicionales.</p>
+                        <div class="card-badge">Receta tradicional</div>
+                        <div class="card-badge">Artesanal</div>
+                        <p style="margin-top: 1rem; font-weight: 500;">Ideal para regalos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <h3>🛒 Puntos de Venta</h3>
+                <ul>
+                    <li><strong>Tienda Cooperativa Jarilla Viva:</strong> Plaza Mayor, s/n - Abierto todos los días</li>
+                    <li><strong>Mercado Local:</strong> Domingos por la mañana en la Plaza del Pueblo</li>
+                    <li><strong>Visitas a fincas:</strong> Compra directa en productores (con reserva previa)</li>
+                    <li><strong>Tienda online:</strong> jarillaviva.es - Envíos a toda España</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🌱 Compromiso de Calidad</h3>
+                <p>Todos los productos de la cooperativa cumplen con:</p>
+                <ul>
+                    <li>Producción 100% local en Jarilla y comarca</li>
+                    <li>Métodos agroecológicos sin químicos ni pesticidas</li>
+                    <li>Comercio justo con precios dignos para productores</li>
+                    <li>Trazabilidad completa del origen al consumidor</li>
+                    <li>Reinversión de beneficios en la comunidad</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Contacto -->
+        <div id="contacto" class="section">
+            <h2 style="color: var(--color-primary); margin-bottom: 1.5rem;">Contacta con Nosotros</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">📍</div>
+                    <div class="card-content">
+                        <h3>Ubicación</h3>
+                        <p><strong>Jarilla</strong><br>Cáceres, Extremadura<br>España</p>
+                        <p style="margin-top: 1rem; color: var(--color-text-light);">En el corazón de la comarca afectada por los incendios de 2025</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📧</div>
+                    <div class="card-content">
+                        <h3>Email</h3>
+                        <p><strong>info@jarillaviva.es</strong></p>
+                        <p style="margin-top: 0.5rem;"><strong>reservas@jarillaviva.es</strong></p>
+                        <p style="margin-top: 1rem; color: var(--color-text-light);">Respuesta en menos de 24 horas</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <div class="card-content">
+                        <h3>Teléfono</h3>
+                        <p><strong>+34 XXX XXX XXX</strong></p>
+                        <p style="margin-top: 1rem; color: var(--color-text-light);">Lun-Dom: 9:00 - 20:00</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-content">
+                        <h3>Web y Redes</h3>
+                        <p><strong>www.jarillaviva.es</strong></p>
+                        <p style="margin-top: 0.5rem;">Síguenos en redes sociales para conocer nuestras actividades y novedades</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <h3>🤝 Alianzas Estratégicas</h3>
+                <p>Jarilla Viva colabora con:</p>
+                <ul>
+                    <li><strong>Junta de Extremadura:</strong> Plan INFOEX, restauración forestal</li>
+                    <li><strong>MITECO:</strong> Validación ambiental y financiación PAEAS</li>
+                    <li><strong>Unión Europea:</strong> Fondos LIFE, PSTD y NextGeneration</li>
+                    <li><strong>Ayuntamiento de Jarilla:</strong> Participación local y coordinación</li>
+                    <li><strong>Universidades:</strong> Programas formativos y prácticas ambientales</li>
+                    <li><strong>ONG ambientales:</strong> Voluntariado y proyectos de conservación</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🌿 ¿Quieres ser parte del cambio?</h3>
+                <p>Existen diferentes formas de colaborar con Jarilla Viva:</p>
+                <ul>
+                    <li><strong>Como visitante:</strong> Participa en nuestras experiencias regenerativas</li>
+                    <li><strong>Como voluntario:</strong> Únete a jornadas de reforestación</li>
+                    <li><strong>Como socio:</strong> Forma parte de la cooperativa (consultar requisitos)</li>
+                    <li><strong>Como apadrinador:</strong> Programa "Apadrina tu Encina"</li>
+                    <li><strong>Como empresa:</strong> Patrocinio de proyectos de regeneración</li>
+                    <li><strong>Como centro educativo:</strong> Alianzas para programas formativos</li>
+                </ul>
+                <p style="margin-top: 1rem; font-weight: 500;">Contáctanos para más información sobre cómo colaborar</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-secondary" onclick="alert('Formulario de reservas: funcionalidad próximamente disponible en jarillaviva.es')">
+                    Reserva tu Experiencia
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Jarilla Viva - Cooperativa de Turismo Regenerativo y Agroecológico</strong></p>
+        <p style="margin-top: 0.5rem;">"Dejamos una huella verde, no una huella de carbono"</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2025 Jarilla Viva | Jarilla, Cáceres, Extremadura</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Una iniciativa comunitaria para la regeneración ecológica y el desarrollo local sostenible</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Actualizar navegación activa
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById('nav-' + sectionId).classList.add('active');
+
+            // Scroll al inicio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
